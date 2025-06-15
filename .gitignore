@@ -1,2 +1,14 @@
+# Ignore Python env & cache
 env/
-.DS_Store
+__pycache__/
+*.pyc
+
+# Streamlit & system files
+.streamlit/secrets.toml
+*.DS_Store
+
+# Output files
+saved/
+*.json
+
+feedback_dataset/
