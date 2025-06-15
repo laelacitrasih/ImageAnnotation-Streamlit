@@ -7,6 +7,11 @@ from PIL import Image
 import os
 import uuid
 
+if not os.path.exists("yolov8n.pt"):
+    from urllib.request import urlretrieve
+    urlretrieve("https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt", "yolov8n.pt")
+
+
 # Load model
 model = YOLO("yolov8n.pt")
 FEEDBACK_DIR = "feedback_dataset/images"
