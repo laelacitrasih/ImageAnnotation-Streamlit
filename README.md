@@ -1,6 +1,3 @@
-# ImageAnnotation-Streamlit
-Light and interactive image annotation app built with Streamlit – draw bounding boxes, label images, and store annotations in JSON format.
-
 # 🍱 ImageAnnotation-Streamlit
 
 Aplikasi anotasi dan klasifikasi gambar berbasis Streamlit, dirancang untuk mendeteksi dan memberi label pada gambar makanan tradisional Indonesia secara otomatis dan manual.
