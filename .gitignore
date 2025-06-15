@@ -1,14 +1,22 @@
-# Ignore Python env & cache
+# Virtual environment
 env/
-__pycache__/
-*.pyc
 
-# Streamlit & system files
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+
+# Streamlit
 .streamlit/secrets.toml
 *.DS_Store
 
-# Output files
-saved/
-*.json
+# Anotasi hasil user (jangan ikut push)
+feedback_dataset/images/
+feedback_dataset/labels/
 
-feedback_dataset/
+# Model (biar auto-download saja)
+yolov8n.pt
+yolov8n.pt
+
+saved/
