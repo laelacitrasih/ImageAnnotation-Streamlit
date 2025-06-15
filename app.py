@@ -9,7 +9,10 @@ import uuid
 
 if not os.path.exists("yolov8n.pt"):
     from urllib.request import urlretrieve
-    urlretrieve("https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt", "yolov8n.pt")
+    urlretrieve(
+        "https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt",
+        "yolov8n.pt"
+    )
 
 
 # Load model
