@@ -113,7 +113,7 @@ if uploaded_file:
     canvas_result = st_canvas(
         fill_color="rgba(255, 0, 0, 0.3)",
         stroke_width=2,
-        background_image=np.array(image),
+        background_image=np.array(image).copy(),  # ✅ FIX: Hindari error array ambiguity
         update_streamlit=True,
         height=image.height,
         width=image.width,
@@ -154,6 +154,7 @@ if uploaded_file:
         st.success(f"✅ Anotasi manual disimpan: {filename}")
 else:
     st.info("Silakan unggah gambar terlebih dahulu untuk memulai anotasi.")
+
 
 # import streamlit as st
 # from PIL import Image, ImageDraw, ImageFont
