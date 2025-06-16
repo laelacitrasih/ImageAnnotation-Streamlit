@@ -158,6 +158,7 @@
 
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 import os
 import json
 import uuid
@@ -185,7 +186,7 @@ if uploaded_file:
     canvas_result = st_canvas(
         fill_color="rgba(255, 0, 0, 0.3)",
         stroke_width=2,
-        background_image=image,
+        background_image=np.array(image),
         update_streamlit=True,
         height=image.height,
         width=image.width,
