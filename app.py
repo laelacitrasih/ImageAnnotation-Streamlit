@@ -105,55 +105,56 @@ if uploaded_file:
             json.dump(save_data, f, indent=2)
         st.success(f"✅ Anotasi otomatis disimpan: {filename}")
 
+    # === Anotasi Manual ===
     st.subheader("🖌️ Anotasi Manual (gambar kotak)")
     label_input = st.text_input("🏷️ Masukkan label anotasi (otomatis/manual)")
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 0, 0, 0.3)",
-        stroke_width=2,
-        background_image=image,
-        update_streamlit=True,
-        height=image.height,
-        width=image.width,
-        drawing_mode="rect",
-        key="canvas_main"
-    )
 
-    if canvas_result.json_data and len(canvas_result.json_data["objects"]) > 0 and label_input:
-        obj = canvas_result.json_data["objects"][-1]
-        left = int(obj["left"])
-        top = int(obj["top"])
-        width = int(obj["width"])
-        height = int(obj["height"])
-        xmin_manual, ymin_manual = left, top
-        xmax_manual, ymax_manual = left + width, top + height
+    # Pastikan image valid sebelum panggil st_canvas
+    if image:
+        canvas_result = st_canvas(
+            fill_color="rgba(255, 0, 0, 0.3)",
+            stroke_width=2,
+            background_image=image,
+            update_streamlit=True,
+            height=image.height,
+            width=image.width,
+            drawing_mode="rect",
+            key="canvas_main"
+        )
 
-        draw = ImageDraw.Draw(image)
-        draw.rectangle([xmin_manual, ymin_manual, xmax_manual, ymax_manual], outline="red", width=2)
+        if canvas_result.json_data and len(canvas_result.json_data["objects"]) > 0 and label_input:
+            obj = canvas_result.json_data["objects"][-1]
+            left = int(obj["left"])
+            top = int(obj["top"])
+            width = int(obj["width"])
+            height = int(obj["height"])
+            xmin_manual, ymin_manual = left, top
+            xmax_manual, ymax_manual = left + width, top + height
 
-        try:
-            font = ImageFont.truetype("arial.ttf", 18)
-        except:
-            font = ImageFont.load_default()
-        text_position = (xmin_manual + 4, max(ymin_manual - 20, 0))
-        draw.text(text_position, label_input, fill="red", font=font)
+            draw = ImageDraw.Draw(image)
+            draw.rectangle([xmin_manual, ymin_manual, xmax_manual, ymax_manual], outline="red", width=2)
 
-        st.image(image, caption="🖍️ Hasil Anotasi Manual", use_column_width=True)
+            try:
+                font = ImageFont.truetype("arial.ttf", 18)
+            except:
+                font = ImageFont.load_default()
 
-        save_data = {
-            "image": uploaded_file.name,
-            "label": label_input,
-            "box": [xmin_manual, ymin_manual, xmax_manual, ymax_manual]
-        }
-        filename = os.path.join(ANNOTATION_DIR, f"annotation_{uuid.uuid4().hex[:8]}.json")
-        with open(filename, "w") as f:
-            json.dump(save_data, f, indent=2)
-        st.success(f"✅ Anotasi manual disimpan: {filename}")
+            text_position = (xmin_manual + 4, max(ymin_manual - 20, 0))
+            draw.text(text_position, label_input, fill="red", font=font)
 
+            st.image(image, caption="🖍️ Hasil Anotasi Manual", use_column_width=True)
 
-
-
-
-
+            save_data = {
+                "image": uploaded_file.name,
+                "label": label_input,
+                "box": [xmin_manual, ymin_manual, xmax_manual, ymax_manual]
+            }
+            filename = os.path.join(ANNOTATION_DIR, f"annotation_{uuid.uuid4().hex[:8]}.json")
+            with open(filename, "w") as f:
+                json.dump(save_data, f, indent=2)
+            st.success(f"✅ Anotasi manual disimpan: {filename}")
+else:
+    st.info("Silakan unggah gambar terlebih dahulu untuk memulai anotasi.")
 
 
 # import streamlit as st
